@@ -16,17 +16,13 @@
 import { lazy } from 'react';
 
 // Lazy load components
-// const LandingPage = lazy(() => import('./landingpage/LandingPage'));
-// const Login = lazy(() => import('./Auth/Login'));
-// const Signup = lazy(() => import('./Auth/Signup'));
-// const Dashboard = lazy(() => import('./dashboard/Dashboard'));
-// const Profile = lazy(() => import('./Profile/Profile'));
+const LandingPage = lazy(() => import('./landingpage/Landingpage'));
+const Login = lazy(() => import('./Auth/Login'));
+const Signup = lazy(() => import('./Auth/Signup'));
+const Dashboard = lazy(() => import('./dashboard/Dashboard'));
+const Profile = lazy(() => import('./Profile/Profile'));
 
-const LandingPage = lazy(() => import('./landingpage/LandingPage').then(m => ({ default: m.default || m })));
-const Login = lazy(() => import('./Auth/Login').then(m => ({ default: m.default || m })));
-const Signup = lazy(() => import('./Auth/Signup').then(m => ({ default: m.default || m })));
-const Dashboard = lazy(() => import('./dashboard/Dashboard').then(m => ({ default: m.default || m })));
-const Profile = lazy(() => import('./Profile/Profile').then(m => ({ default: m.default || m })));
+
 
 
 
