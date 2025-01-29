@@ -11,8 +11,6 @@ import { localStorageData } from './helpers/token.js';
 import { useDispatch, useSelector } from 'react-redux';
 import { setUserData } from './action/dataAction.js';
 import { handleUserProfile } from './Services/LoginService.js';
-import Textarea from './components/Textarea.jsx';
-import PostListing from './Post/postListing.jsx';
 import { handlePostListing } from './Services/PostServices.js';
 
 function App() {
