@@ -16,11 +16,18 @@
 import { lazy } from 'react';
 
 // Lazy load components
-const LandingPage = lazy(() => import('./landingpage/LandingPage'));
-const Login = lazy(() => import('./Auth/Login'));
-const Signup = lazy(() => import('./Auth/Signup'));
-const Dashboard = lazy(() => import('./dashboard/Dashboard'));
-const Profile = lazy(() => import('./Profile/Profile'));
+// const LandingPage = lazy(() => import('./landingpage/LandingPage'));
+// const Login = lazy(() => import('./Auth/Login'));
+// const Signup = lazy(() => import('./Auth/Signup'));
+// const Dashboard = lazy(() => import('./dashboard/Dashboard'));
+// const Profile = lazy(() => import('./Profile/Profile'));
+
+const LandingPage = lazy(() => Promise.resolve({ default: require('./landingpage/LandingPage').default }));
+const Login = lazy(() => Promise.resolve({ default: require('./Auth/Login').default }));
+const Signup = lazy(() => Promise.resolve({ default: require('./Auth/Signup').default }));
+const Dashboard = lazy(() => Promise.resolve({ default: require('./dashboard/Dashboard').default }));
+const Profile = lazy(() => Promise.resolve({ default: require('./Profile/Profile').default }));
+
 
 // Route definitions
 export const routes = [
