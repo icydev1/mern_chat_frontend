@@ -1,11 +1,6 @@
 // routes.js
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import React, { lazy, Suspense } from 'react';
-import Login from './Auth/Login';
-import Signup from './Auth/Signup';
-// import LandingPage from './landingpage/Landingpage';
-import Sidebar from './partial/Sidebar';
-import Navbar from './partial/Navbar';
+
 
 export const routes = [
   { path: '/', element: lazy(() => import('./landingpage//LandingPage')), private: false },
