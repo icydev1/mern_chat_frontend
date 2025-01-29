@@ -22,11 +22,12 @@ import { lazy } from 'react';
 // const Dashboard = lazy(() => import('./dashboard/Dashboard'));
 // const Profile = lazy(() => import('./Profile/Profile'));
 
-const LandingPage = lazy(() => Promise.resolve({ default: require('./landingpage/LandingPage').default }));
-const Login = lazy(() => Promise.resolve({ default: require('./Auth/Login').default }));
-const Signup = lazy(() => Promise.resolve({ default: require('./Auth/Signup').default }));
-const Dashboard = lazy(() => Promise.resolve({ default: require('./dashboard/Dashboard').default }));
-const Profile = lazy(() => Promise.resolve({ default: require('./Profile/Profile').default }));
+const LandingPage = lazy(() => import('./landingpage/LandingPage').then(m => ({ default: m.default || m })));
+const Login = lazy(() => import('./Auth/Login').then(m => ({ default: m.default || m })));
+const Signup = lazy(() => import('./Auth/Signup').then(m => ({ default: m.default || m })));
+const Dashboard = lazy(() => import('./dashboard/Dashboard').then(m => ({ default: m.default || m })));
+const Profile = lazy(() => import('./Profile/Profile').then(m => ({ default: m.default || m })));
+
 
 
 // Route definitions
