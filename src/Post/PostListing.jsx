@@ -1,11 +1,14 @@
 import { useEffect, useState } from "react"
 import { handlePostListing } from "../Services/PostServices";
+import { Link } from "react-router-dom";
+// import { useSelector } from "react-redux";
 
 
 const PostListing = ({data}) => {
 
+  // const userData = useSelector((state) => state.userData);
 
-  console.log(data,'postDatapostData');
+  // console.log(userData,'postDatapostData');
   
 
   const [likes, setLikes] = useState(0);
@@ -26,7 +29,7 @@ const PostListing = ({data}) => {
       {data?.map((post, index) => (
         <div key={index} className="post-container w-full bg-white rounded-lg shadow-lg p-4 mb-4">
           <div className="post-header flex items-center justify-between mb-2">
-            <span className="user-name text-xl font-semibold">{post?.user_id?.name}</span>
+            <Link to={`/profile/${post?.user_id?.name}/${post?.user_id?._id}`}><span className="user-name text-xl font-semibold">{post?.user_id?.name}</span></Link>
           </div>
           <div className="post-content mb-2">
             <p>{post.content}</p>

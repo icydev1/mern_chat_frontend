@@ -32,6 +32,9 @@ function App() {
         try {
           const result = await handleUserProfile(token);
 
+          // console.log(result,'resultresult');
+          
+
           if (result && result.data) {
             setLoggedIn(true);
             dispatch(setUserData(result?.data?.data));
@@ -107,6 +110,7 @@ function App() {
               <Sidebar
                 isOpen={isSidebarOpen}
                 logout={logout}
+                userData={userData}
                 className="w-1/5 min-w-[200px] bg-gray-800 text-white"
               />
 
