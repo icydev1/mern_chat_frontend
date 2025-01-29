@@ -1,6 +1,6 @@
 import React from 'react'
 import Textarea from '../components/Textarea'
-import PostListing from '../Post/postListing'
+import PostListing from '../Post/PostListing'
 
 const Dashboard = ({posts,data}) => {
     
