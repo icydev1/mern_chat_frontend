@@ -10,6 +10,16 @@ const handleLogin = async (formData) => {
   }
 };
 
+const handleSignup = async (formData) => {
+  try {
+    const response = await axiosInstance.post('auth/signup', formData);
+    return response;
+  } catch (error) {
+    console.error('Error fetching data:', error);
+    throw error;
+  }
+};
+
 const handleForgetPassword = async (forgetPasswordData) => {
   try {
     const response = await axiosInstance.post('forgot-password', forgetPasswordData);
@@ -48,5 +58,6 @@ export {
   handleLogin,
   handleForgetPassword,
   handleResetPassword,
-  handleUserProfile
+  handleUserProfile,
+  handleSignup
 };

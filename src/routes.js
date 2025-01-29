@@ -21,6 +21,7 @@ const Login = lazy(() => import('./Auth/Login'));
 const Signup = lazy(() => import('./Auth/Signup'));
 const Dashboard = lazy(() => import('./dashboard/Dashboard'));
 const Profile = lazy(() => import('./Profile/Profile'));
+const EditProfile = lazy(() => import('./Profile/EditProfile'));
 
 
 
@@ -33,6 +34,7 @@ export const routes = [
   { path: '/signup', element: Signup, private: false },
   { path: '/', element: Dashboard, private: true },
   { path: '/profile', element: Profile, private: true },
+  { path: '/edit-profile', element: EditProfile, private: true },
 ];
 
 // Filter routes into public and private

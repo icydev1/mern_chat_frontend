@@ -1,8 +1,9 @@
+import { Link } from "react-router-dom";
 
 const Profile = () => {
     return (
       <div className="flex flex-col items-center bg-gray-100 min-h-screen p-6">
-        <div className="bg-white rounded-2xl shadow-md p-6 w-full max-w-sm">
+        <div className="bg-white rounded-2xl shadow-md p-6 w-full ">
           <div className="flex flex-col items-center">
             <img
               src="https://via.placeholder.com/150"
@@ -31,7 +32,9 @@ const Profile = () => {
           </div>
   
           <div className="mt-6 flex justify-around">
-            <button className="bg-blue-500 text-white px-4 py-2 rounded-lg shadow-md hover:bg-blue-600">Edit Profile</button>
+            <button className="bg-blue-500 text-white px-4 py-2 rounded-lg shadow-md hover:bg-blue-600">
+              <Link to={'/edit-profile'}>Edit Profile</Link>
+            </button>
             <button className="bg-gray-200 text-gray-700 px-4 py-2 rounded-lg shadow-md hover:bg-gray-300">Log Out</button>
           </div>
         </div>

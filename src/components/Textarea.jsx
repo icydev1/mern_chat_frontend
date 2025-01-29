@@ -1,7 +1,10 @@
 import { useState } from "react";
 import { handlePost } from "../Services/PostServices";
+import { showToastNotification } from "../helpers/showToastNotification";
 
 const Textarea = ({posts}) => {
+
+    const [btn, setBtn] = useState(true);
 
     const [formData, setFormData] = useState({
         content:""
@@ -12,7 +15,15 @@ const Textarea = ({posts}) => {
     const handleChange = (e) => {
 
         e.preventDefault();
+
+        
         const {name,value} = e.target;
+
+        setBtn(value.length < 1);
+
+
+        console.log(value.length);
+        
 
         const copyFormData = {...formData}
 
@@ -31,18 +42,19 @@ const Textarea = ({posts}) => {
            
       
             if(result){
-                console.log("done");
-                
+                setBtn(true);
+                showToastNotification('success',result.data.message)
                 setFormData({
                     content:""
                 });
                 posts();
+               
             }
             
       
           } catch (error) {
-            
-            console.log(error);
+            setBtn(false);
+            showToastNotification('warning', error.response.data.message)
       
           }
 
@@ -63,6 +75,7 @@ const Textarea = ({posts}) => {
         placeholder="What's on Your Mind..."
         />
         <button 
+        disabled={btn}
         onClick={handleSubmit}
         className="w-full mt-3 bg-blue-500 text-white rounded-lg py-2 hover:bg-blue-600 transition duration-200"
         >

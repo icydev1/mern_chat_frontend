@@ -12,6 +12,8 @@ import { useDispatch, useSelector } from 'react-redux';
 import { setUserData } from './action/dataAction.js';
 import { handleUserProfile } from './Services/LoginService.js';
 import { handlePostListing } from './Services/PostServices.js';
+import { ToastContainer, toast } from 'react-toastify';
+import { showToastNotification } from './helpers/showToastNotification.js';
 
 function App() {
   const [isSidebarOpen, setSidebarOpen] = useState(false);
@@ -37,7 +39,7 @@ function App() {
         } catch (error) {
           setLoggedIn(false);
           localStorageData.remove('token');
-          window.location.href = "/";
+          // window.location.href = "/";
         }
       } else {
         setLoggedIn(false);
@@ -59,9 +61,10 @@ function App() {
   const logout = (e) => {
 
     e.preventDefault()
-    setLoggedIn(false);
+    showToastNotification('success','Logout Successfully')
     localStorageData.remove('token');
-    window.location.href = "/";
+    setLoggedIn(false);
+    // window.location.href = "/";
 
   }
 
@@ -92,6 +95,7 @@ function App() {
 
   return (
     <>
+    <ToastContainer />
       {isLoading ? (
         <Loader />
       ) : isLoggedIn ? (
