@@ -50,6 +50,7 @@ const Message = () => {
   };
 
   const handleMessage = async (e) => {
+    setMessage("");
   if (e && e.preventDefault) e.preventDefault(); // Ensure e exists before calling preventDefault
 
   if (message.trim() && selectedUser) {
@@ -67,7 +68,7 @@ const Message = () => {
         setTimeout(() => {
           chatEndRef.current?.scrollIntoView({ behavior: "smooth" });
         }, 100);
-        setMessage("");
+        
       }
     } catch (error) {
       console.log(error, "prifl");
