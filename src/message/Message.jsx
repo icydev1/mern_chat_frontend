@@ -16,7 +16,7 @@ const Message = () => {
   useEffect(() => {
     socket.on("message", (data) => {
       setChatHistory((prev) => [...prev, data]);
-      scrollToBottom(0);
+      scrollToBottom(100);
     });
     return () => socket.off("message");
   }, []);
@@ -26,7 +26,7 @@ const Message = () => {
       if (data.room_id === selectedUser?._id) {
         setTypingUser(data.sender_id);
       }
-      scrollToBottom(0);
+      scrollToBottom(100);
       // Remove typing indicator after 3 seconds of inactivity
       setTimeout(() => {
         setTypingUser(null);
