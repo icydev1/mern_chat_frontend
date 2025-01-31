@@ -284,7 +284,7 @@ const Message = () => {
               placeholder="Type your message..."
             />
             <button
-              onClick={ onClick={handleMessage}}
+              onClick={handleMessage}
               className="w-24 sm:w-28 bg-blue-500 text-white py-2 rounded-lg hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500"
             >
               Send
