@@ -278,13 +278,13 @@ const Message = () => {
           {/* Chat Input */}
           <div className="p-2 bg-white border-t flex items-center gap-4">
             <textarea
-              value={message}
-              onChange={(e) => setMessage(e.target.value)}
+                value={message}
+                onChange={handleMessageChange}
               className="w-full p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 resize-none"
               placeholder="Type your message..."
             />
             <button
-              onClick={() => setMessage("")}
+              onClick={ onClick={handleMessage}}
               className="w-24 sm:w-28 bg-blue-500 text-white py-2 rounded-lg hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500"
             >
               Send
