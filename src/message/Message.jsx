@@ -103,7 +103,7 @@ const Message = () => {
   };
 
   return (
-    <div className="flex h-screen bg-gray-100">
+    <div className="flex h-screen p-2 bg-gray-100">
     {/* Sidebar: User Listing (Full width on small screens) */}
     <div className="w-full sm:w-1/4 bg-white shadow-md p-4 flex flex-col">
       <h2 className="text-xl font-semibold mb-4 text-center">Users</h2>
