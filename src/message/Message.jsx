@@ -24,14 +24,14 @@ const Message = () => {
 
   useEffect(() => {
     socket.on("typing", (data) => {
-      // if (data.room_id === selectedUser?._id) {
+      if (data.room_id === selectedUser?._id) {
         setTypingUser(data.sender_id);
-      // }
+      }
       // scrollToBottom()
       // Remove typing indicator after 3 seconds of inactivity
       setTimeout(() => {
         setTypingUser(null);
-      }, 5000);
+      }, 3000);
     });
   
     return () => socket.off("typing");
@@ -101,12 +101,12 @@ const handleMessageChange = (e) => {
   // console.log(selectedUser,'selectedUserselectedUser');
   // scrollToBottom()
 
-  // if (selectedUser) {
+  if (selectedUser) {
     socket.emit("typing", {
       sender_id: selectedUser?.authUser._id,
-      // room_id: selectedUser?._id,
+      room_id: selectedUser?._id,
     });
-  // }
+  }
 };
 
 
@@ -125,14 +125,6 @@ const handleMessageChange = (e) => {
               }}
             >
               {user?.receiverList?.name}
-
-              {typingUser && typingUser === user?.receiverList?._id && (
-                  <div className="flex justify-start">
-                    <div className="p-2 rounded-lg max-w-xs bg-gray-200 italic text-sm">
-                      is typing...
-                    </div>
-                  </div>
-                )}
             </li>
           ))}
         </ul>
@@ -155,7 +147,13 @@ const handleMessageChange = (e) => {
                 )
               ))}
 
-              
+              {typingUser && typingUser === selectedUser?.receiverList?._id && (
+                  <div className="flex justify-start">
+                    <div className="p-2 rounded-lg max-w-xs bg-gray-200 italic text-sm">
+                      {selectedUser?.receiverList?.name} is typing...
+                    </div>
+                  </div>
+                )}
               <div ref={chatEndRef} />
             </div>
 
