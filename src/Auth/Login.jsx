@@ -103,8 +103,8 @@ function Login({ updateState }) {
 
       } catch (error) {
         // toast(error.response.data.message);
-        showToastNotification('warning', error.response.data.message)
         console.log(error);
+        showToastNotification('warning', error.response.data.message || 'Something Went Wrong , Please Refresh Page')
         setBtn(false)
         // navigate('/');
       }

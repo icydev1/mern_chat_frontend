@@ -1,9 +1,10 @@
 import { useSelector } from "react-redux";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useParams } from 'react-router-dom';
-import { handleFollowUnfollow } from "../Services/ProfileServices";
+import { handleFollowUnfollow, handleUserProfileData } from "../Services/ProfileServices";
 import { showToastNotification } from '../helpers/showToastNotification';
 import { useEffect, useState } from "react";
+import { handleMessageRoom } from "../Services/MessageService";
 
 const Profile = () => {
 
@@ -11,7 +12,11 @@ const Profile = () => {
 
   const [btnText , setBtnText] = useState('Follow')
 
+  const [userProfileData , setUserProfileData] = useState([]);
+
   const { username, id } = useParams();
+
+  const naviagte = useNavigate();
 
   const isOwnProfile = userData?.user?._id === id
 
@@ -25,14 +30,14 @@ const Profile = () => {
         setBtnText('Follow');
         }
     }, [userData, id]);
+
+
+    useEffect(() => {
+        fetchProfileData();
+    }, [id,username]);
     //  
 
-    //   console.log(userData?.friendlist);
-
-    
-  
-
-//   console.log(checkFollow,'checkFollow');
+   
   
 
   const handleUser = async (e) => {
@@ -45,8 +50,6 @@ const Profile = () => {
         }
 
        
-        
-
         const result = await handleFollowUnfollow(formData);
        
   
@@ -66,6 +69,59 @@ const Profile = () => {
 
   }
 
+
+  const fetchProfileData = async () => {
+
+    try {
+
+        const formData = {
+            user_id : id
+        }
+
+       
+        const result = await handleUserProfileData(formData);
+  
+        console.log(result,'resultresult');
+        
+  
+        if(result){
+            setUserProfileData(result?.data?.data);
+        }
+        
+  
+      } catch (error) {
+        console.log(error,'prifl');
+      }
+
+  }
+
+  const handleMessage = async () => {
+
+    try {
+
+        const formData = {
+            user_id : id ,
+            name : userProfileData?.user?.name,
+        }
+
+       
+        const result = await handleMessageRoom(formData);
+  
+        console.log(result,'resultresult');
+        
+  
+        if(result){
+            naviagte('/message')
+            // setUserProfileData(result?.data?.data);
+        }
+        
+  
+      } catch (error) {
+        console.log(error,'prifl');
+      }
+
+  }
+
 //   get-friend-lists
 
   
@@ -80,8 +136,8 @@ const Profile = () => {
                         alt="User Avatar"
                         className="w-32 h-32 rounded-full border-4 border-blue-500 shadow-lg"
                     />
-                    <h2 className="mt-4 text-xl font-semibold text-gray-800">John Doe</h2>
-                    <p className="text-gray-600">johndoe@example.com</p>
+                    <h2 className="mt-4 text-xl font-semibold text-gray-800">{userProfileData?.user?.name}</h2>
+                    <p className="text-gray-600">{userProfileData?.user?.email}</p>
                     <p className="mt-2 text-sm text-gray-500">Frontend Developer</p>
                 </div>
 
@@ -97,7 +153,9 @@ const Profile = () => {
                             className="bg-blue-500 text-white px-4 py-2 rounded-lg shadow-md hover:bg-blue-600">
                                 {btnText}
                             </button>
-                            <button className="bg-gray-200 text-gray-700 px-4 py-2 rounded-lg shadow-md hover:bg-gray-300">
+                            <button 
+                                onClick={handleMessage}                            
+                            className="bg-gray-200 text-gray-700 px-4 py-2 rounded-lg shadow-md hover:bg-gray-300">
                                 Message
                             </button>
                         </>

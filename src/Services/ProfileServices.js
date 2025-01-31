@@ -21,10 +21,24 @@ const handleFriendListing = async (formData) => {
     }
   };
 
+const handleUserProfileData = async (formData) => {
+
+  
+    try {
+      const response = await axiosInstance.post('user/get-profile-data', formData);
+      // console.log(response,'response');
+      return response;
+    } catch (error) {
+      console.error('Error fetching data:', error);
+      throw error;
+    }
+  };
+
 
 
 export {
     handleFollowUnfollow,
-    handleFriendListing
+    handleFriendListing,
+    handleUserProfileData
  
 };
