@@ -26,7 +26,7 @@ const Message = () => {
       if (data.room_id === selectedUser?._id) {
         setTypingUser(data.sender_id);
       }
-      scrollToBottom();
+      // scrollToBottom();
       // Remove typing indicator after 3 seconds of inactivity
       setTimeout(() => {
         setTypingUser(null);
@@ -41,7 +41,8 @@ const Message = () => {
   }, []);
 
   const scrollToBottom = () => {
-    setTimeout(() => chatEndRef.current?.scrollIntoView({ behavior: "smooth" }), 100);
+    chatEndRef.current?.scrollIntoView({ behavior: "smooth" });
+    // setTimeout(() => chatEndRef.current?.scrollIntoView({ behavior: "smooth" }), 100);
   };
 
   const fetchRoomListing = async () => {
@@ -269,13 +270,13 @@ const Message = () => {
             )
           ))}
 
-          {/* {typingUser && typingUser === selectedUser?.receiverList?._id && (
+          {typingUser && typingUser === selectedUser?.receiverList?._id && (
             <div className="flex justify-start">
               <div className="p-2 rounded-lg max-w-xs bg-gray-200 italic text-sm">
                 {selectedUser?.receiverList?.name} is typing...
               </div>
             </div>
-          )} */}
+          )}
           <div ref={chatEndRef} />
         </div>
 
