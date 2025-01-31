@@ -269,13 +269,13 @@ const Message = () => {
             )
           ))}
 
-          {typingUser && typingUser === selectedUser?.receiverList?._id && (
+          {/* {typingUser && typingUser === selectedUser?.receiverList?._id && (
             <div className="flex justify-start">
               <div className="p-2 rounded-lg max-w-xs bg-gray-200 italic text-sm">
                 {selectedUser?.receiverList?.name} is typing...
               </div>
             </div>
-          )}
+          )} */}
           <div ref={chatEndRef} />
         </div>
 
