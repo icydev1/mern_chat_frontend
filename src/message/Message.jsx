@@ -29,11 +29,12 @@ const Message = () => {
         chatEndRef.current?.scrollIntoView({ behavior: "smooth" });
       }, 100);
       setChatHistory((prevMessages) => [...prevMessages, data]);
+
+      
+      
     });
 
-    // socket.emit("clientMessage", data);
-
-    // Cleanup on component unmount
+    
     return () => socket.off("message");
   }, []);
 
@@ -122,10 +123,8 @@ const Message = () => {
       
         const result = await handleSendMessage(formData);
 
-        // console.log(result,'resultresult');
-        
-
         if(result){
+          
           socket.emit("sendMessage", result?.data?.data);
           setTimeout(() => {
             chatEndRef.current?.scrollIntoView({ behavior: "smooth" });
@@ -145,8 +144,7 @@ const Message = () => {
       }
   };
 
-  // console.log(roomListing,'roomListingroomListing');
-  
+ 
 
 
   return (
@@ -180,24 +178,28 @@ const Message = () => {
         <h2 className="text-2xl font-semibold mb-4">
           {selectedUser ? `Chat with ${selectedUser?.receiverList?.name}` : 'Select a user to start chatting'}
         </h2>
-        {selectedUser && (
+        {selectedUser &&   (
           <>
             <div className="mb-4 p-4 bg-gray-50 rounded-lg h-80 overflow-y-auto flex flex-col space-y-4">
-
-            {chatHistory.map((val, index) => (
-            <div
-              key={index}
-              className={`flex ${selectedUser?.receiverList?._id === val.sender_id ? 'justify-start' : 'justify-end'}`}
-            >
-              <div className={`p-2 rounded-lg max-w-xs ${selectedUser?.receiverList?._id === val.sender_id ? 'bg-gray-200' : 'bg-blue-100 self-end'}`}>
-                {val.content}
+          {chatHistory.map((val, index) =>
+            selectedUser._id === val.room_id && (
+              <div
+                key={index}
+                className={`flex ${selectedUser?.receiverList?._id === val.sender_id ? 'justify-start' : 'justify-end'}`}
+              >
+                <div
+                  className={`p-2 rounded-lg max-w-xs ${
+                    selectedUser?.receiverList?._id === val.sender_id ? 'bg-gray-200' : 'bg-blue-100 self-end'
+                  }`}
+                >
+                  {val.content}
+                </div>
               </div>
-            </div>
-          ))}
+            )
+          )}
+          <div ref={chatEndRef} />
+        </div>
 
-            <div ref={chatEndRef} />
-
-            </div>
 
             <textarea
               value={message}
