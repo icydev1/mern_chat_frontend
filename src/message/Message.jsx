@@ -106,6 +106,7 @@ const Message = () => {
               ))}
               <div ref={chatEndRef} />
             </div>
+            
             <textarea
               value={message}
               onChange={(e) => setMessage(e.target.value)}
