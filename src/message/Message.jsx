@@ -105,11 +105,13 @@ const Message = () => {
           <>
             <div className="mb-4 p-4 bg-gray-50 rounded-lg h-80 overflow-y-auto flex flex-col space-y-4">
               {chatHistory.map((val, index) => (
+                val?.room_id === selectedUser?._id && (
                 <div key={index} className={`flex ${val.sender_id === selectedUser?.receiverList?._id ? 'justify-start' : 'justify-end'}`}>
                   <div className={`p-2 rounded-lg max-w-xs ${val.sender_id === selectedUser?.receiverList?._id ? 'bg-gray-200' : 'bg-blue-100 self-end'}`}>
                     {val.content}
                   </div>
                 </div>
+                )
               ))}
               <div ref={chatEndRef} />
             </div>
