@@ -10,7 +10,6 @@ const Message = () => {
   const [roomListing, setRoomListing] = useState([]);
   const [chatHistory, setChatHistory] = useState([]);
   const [typingUser, setTypingUser] = useState(null);
-
   const [message, setMessage] = useState("");
   const chatEndRef = useRef(null);
 
@@ -27,7 +26,7 @@ const Message = () => {
       if (data.room_id === selectedUser?._id) {
         setTypingUser(data.sender_id);
       }
-      scrollToBottom()
+      scrollToBottom();
       // Remove typing indicator after 3 seconds of inactivity
       setTimeout(() => {
         setTypingUser(null);
@@ -36,7 +35,6 @@ const Message = () => {
   
     return () => socket.off("typing");
   }, [selectedUser]);
-  
 
   useEffect(() => {
     fetchRoomListing();
@@ -69,50 +67,44 @@ const Message = () => {
 
   const handleMessage = async (e) => {
     setMessage("");
-  if (e && e.preventDefault) e.preventDefault(); // Ensure e exists before calling preventDefault
+    if (e && e.preventDefault) e.preventDefault(); // Ensure e exists before calling preventDefault
 
-  if (message.trim() && selectedUser) {
-    try {
-      const formData = {
-        receiver_id: selectedUser?.receiverList?._id,
-        room_id: selectedUser?._id,
-        content: message,
-      };
+    if (message.trim() && selectedUser) {
+      try {
+        const formData = {
+          receiver_id: selectedUser?.receiverList?._id,
+          room_id: selectedUser?._id,
+          content: message,
+        };
 
-      const result = await handleSendMessage(formData);
+        const result = await handleSendMessage(formData);
 
-      if (result) {
-        socket.emit("sendMessage", result?.data?.data);
-        setTimeout(() => {
-          chatEndRef.current?.scrollIntoView({ behavior: "smooth" });
-        }, 100);
-        
+        if (result) {
+          socket.emit("sendMessage", result?.data?.data);
+          setTimeout(() => {
+            chatEndRef.current?.scrollIntoView({ behavior: "smooth" });
+          }, 100);
+        }
+      } catch (error) {
+        console.log(error, "prifl");
       }
-    } catch (error) {
-      console.log(error, "prifl");
     }
-  }
-};
+  };
 
-const handleMessageChange = (e) => {
-  setMessage(e.target.value);
-  // (e) => setMessage(e.target.value)
+  const handleMessageChange = (e) => {
+    setMessage(e.target.value);
 
-  // console.log(selectedUser,'selectedUserselectedUser');
-  // scrollToBottom()
-
-  if (selectedUser) {
-    socket.emit("typing", {
-      sender_id: selectedUser?.authUser._id,
-      room_id: selectedUser?._id,
-    });
-  }
-};
-
+    if (selectedUser) {
+      socket.emit("typing", {
+        sender_id: selectedUser?.authUser._id,
+        room_id: selectedUser?._id,
+      });
+    }
+  };
 
   return (
-    <div className="flex h-screen bg-gray-100">
-      <div className="w-1/4 bg-white shadow-md p-4 overflow-y-auto">
+    <div className="flex flex-col sm:flex-row h-screen bg-gray-100">
+      <div className="w-full sm:w-1/4 bg-white shadow-md p-4 overflow-y-auto">
         <h2 className="text-xl font-semibold mb-6 text-center">Users</h2>
         <ul>
           {roomListing.map((user) => (
@@ -160,7 +152,6 @@ const handleMessageChange = (e) => {
             <textarea
               value={message}
               onChange={handleMessageChange}
-              // rows="4"
               className="w-full p-2 border border-gray-300 rounded-lg mb-4 focus:outline-none focus:ring-2 focus:ring-blue-500"
               placeholder="Type your message here..."
             />
