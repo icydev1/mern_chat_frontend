@@ -49,26 +49,32 @@ const Message = () => {
     }
   };
 
-  const handleSendMessage = async (e) => {
-    e.preventDefault();
-    if (!message.trim() || !selectedUser) return;
+  const handleMessage = async (e) => {
+  if (e && e.preventDefault) e.preventDefault(); // Ensure e exists before calling preventDefault
 
+  if (message.trim() && selectedUser) {
     try {
       const formData = {
         receiver_id: selectedUser?.receiverList?._id,
         room_id: selectedUser?._id,
         content: message,
       };
+
       const result = await handleSendMessage(formData);
-      if (result?.data?.data) {
-        socket.emit("sendMessage", result.data.data);
+
+      if (result) {
+        socket.emit("sendMessage", result?.data?.data);
+        setTimeout(() => {
+          chatEndRef.current?.scrollIntoView({ behavior: "smooth" });
+        }, 100);
         setMessage("");
-        scrollToBottom();
       }
     } catch (error) {
-      console.error("Error sending message", error);
+      console.log(error, "prifl");
     }
-  };
+  }
+};
+
 
   return (
     <div className="flex h-screen bg-gray-100">
@@ -106,7 +112,7 @@ const Message = () => {
               ))}
               <div ref={chatEndRef} />
             </div>
-            
+
             <textarea
               value={message}
               onChange={(e) => setMessage(e.target.value)}
@@ -115,7 +121,7 @@ const Message = () => {
               placeholder="Type your message here..."
             />
             <button
-              onClick={handleSendMessage}
+              onClick={handleMessage}
               className="w-full bg-blue-500 text-white py-2 rounded-lg hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500"
             >
               Send Message
