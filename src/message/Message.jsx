@@ -16,7 +16,7 @@ const Message = () => {
   useEffect(() => {
     socket.on("message", (data) => {
       setChatHistory((prev) => [...prev, data]);
-      scrollToBottom();
+      scrollToBottom(0);
     });
     return () => socket.off("message");
   }, []);
@@ -26,7 +26,7 @@ const Message = () => {
       if (data.room_id === selectedUser?._id) {
         setTypingUser(data.sender_id);
       }
-      // scrollToBottom();
+      scrollToBottom(0);
       // Remove typing indicator after 3 seconds of inactivity
       setTimeout(() => {
         setTypingUser(null);
@@ -40,8 +40,8 @@ const Message = () => {
     fetchRoomListing();
   }, []);
 
-  const scrollToBottom = () => {
-    setTimeout(() => chatEndRef.current?.scrollIntoView({ behavior: "smooth" }), 100);
+  const scrollToBottom = (timing) => {
+    setTimeout(() => chatEndRef.current?.scrollIntoView({ behavior: "smooth" }), timing);
   };
 
   const fetchRoomListing = async () => {
@@ -58,7 +58,7 @@ const Message = () => {
       const result = await handleChatHistory({ room_id: id });
       if (result?.data?.chatHistory) {
         setChatHistory(result.data.chatHistory);
-        scrollToBottom();
+        scrollToBottom(100);
       }
     } catch (error) {
       console.error("Error fetching chat history", error);
