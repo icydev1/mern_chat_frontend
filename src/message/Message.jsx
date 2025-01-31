@@ -9,6 +9,8 @@ const Message = () => {
   const [selectedUser, setSelectedUser] = useState(null);
   const [roomListing, setRoomListing] = useState([]);
   const [chatHistory, setChatHistory] = useState([]);
+  const [typingUser, setTypingUser] = useState(null);
+
   const [message, setMessage] = useState("");
   const chatEndRef = useRef(null);
 
@@ -19,6 +21,22 @@ const Message = () => {
     });
     return () => socket.off("message");
   }, []);
+
+  useEffect(() => {
+    socket.on("typing", (data) => {
+      // if (data.room_id === selectedUser?._id) {
+        setTypingUser(data.sender_id);
+      // }
+      // scrollToBottom()
+      // Remove typing indicator after 3 seconds of inactivity
+      setTimeout(() => {
+        setTypingUser(null);
+      }, 5000);
+    });
+  
+    return () => socket.off("typing");
+  }, [selectedUser]);
+  
 
   useEffect(() => {
     fetchRoomListing();
@@ -76,6 +94,21 @@ const Message = () => {
   }
 };
 
+const handleMessageChange = (e) => {
+  setMessage(e.target.value);
+  // (e) => setMessage(e.target.value)
+
+  // console.log(selectedUser,'selectedUserselectedUser');
+  // scrollToBottom()
+
+  // if (selectedUser) {
+    socket.emit("typing", {
+      sender_id: selectedUser?.authUser._id,
+      // room_id: selectedUser?._id,
+    });
+  // }
+};
+
 
   return (
     <div className="flex h-screen bg-gray-100">
@@ -92,6 +125,14 @@ const Message = () => {
               }}
             >
               {user?.receiverList?.name}
+
+              {typingUser && typingUser === user?.receiverList?._id && (
+                  <div className="flex justify-start">
+                    <div className="p-2 rounded-lg max-w-xs bg-gray-200 italic text-sm">
+                      is typing...
+                    </div>
+                  </div>
+                )}
             </li>
           ))}
         </ul>
@@ -113,12 +154,14 @@ const Message = () => {
                 </div>
                 )
               ))}
+
+              
               <div ref={chatEndRef} />
             </div>
 
             <textarea
               value={message}
-              onChange={(e) => setMessage(e.target.value)}
+              onChange={handleMessageChange}
               rows="4"
               className="w-full p-2 border border-gray-300 rounded-lg mb-4 focus:outline-none focus:ring-2 focus:ring-blue-500"
               placeholder="Type your message here..."
