@@ -27,7 +27,7 @@ const Message = () => {
       if (data.room_id === selectedUser?._id) {
         setTypingUser(data.sender_id);
       }
-      // scrollToBottom()
+      scrollToBottom()
       // Remove typing indicator after 3 seconds of inactivity
       setTimeout(() => {
         setTypingUser(null);
