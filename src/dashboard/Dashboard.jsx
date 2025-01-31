@@ -6,11 +6,11 @@ const Dashboard = ({posts,data}) => {
     
   return (
     <>
-    <div className="p-4 flex-1 bg-gray-100">
+    <div className="p-4 flex-1 bg-gray-100 overflow-y-auto">
               
               <Textarea  posts={posts}/>
               <PostListing data={data} />
-            </div>
+    </div>
     </>
     )
 }

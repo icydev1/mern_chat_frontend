@@ -116,9 +116,9 @@ function App() {
 
 
               {/* Main Content: 60% */}
-              <div className="flex-1 flex flex-col w-3/5">
+              <div className="flex-1 flex flex-col w-3/5 h-screen">
                 <Navbar toggleSidebar={() => setSidebarOpen(!isSidebarOpen)} />
-                <div className="p-4 flex-1 bg-gray-100">
+               
                   <Routes>
                     {privateRoutes.map((route, index) => (
                       <Route
@@ -130,8 +130,9 @@ function App() {
                       />
                     ))}
                   </Routes>
-                </div>
+                
               </div>
+
 
               {/* Additional Panel: 20% */}
               <div className="w-1/5 min-w-[200px] bg-gray-200 p-4 hidden lg:block">
