@@ -231,7 +231,7 @@ const Message = () => {
     {selectedUser && (
       <div className="flex-1 flex flex-col bg-white h-full overflow-y-auto">
         {/* Fixed Header */}
-        <div className="p-4 bg-white shadow-md flex items-center justify-between sticky top-0 z-10">
+        <div className="p-4 bg-white shadow-md flex items-center justify-between sticky top-0 ">
           {isMobile && (
             <button
               className="text-blue-500 hover:underline"
