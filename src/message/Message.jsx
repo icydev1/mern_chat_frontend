@@ -1,6 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react';
 import io from "socket.io-client";
 import { handleChatHistory, handleMessageRoomListing, handleSendMessage } from '../Services/MessageService';
+import ChatInput from '../components/ChatInput';
 
 const baseUrl = import.meta.env.VITE_APP_BASE_URL;
 const socket = io(baseUrl);
@@ -137,26 +138,28 @@ const Message = () => {
     ) : null}
 
     {/* Chat Panel (Full screen on mobile when selected) */}
-    {selectedUser && (
-      <div className="flex-1 flex flex-col bg-white h-full overflow-y-auto">
-        {/* Fixed Header */}
-        <div className="p-4 bg-white shadow-md flex items-center justify-between sticky top-0 z-10">
-          {isMobile && (
-            <button
-              className="text-blue-500 hover:underline"
-              onClick={() => setSelectedUser(null)}
-            >
-              &larr; Back to Users
-            </button>
-          )}
-          <h2 className="text-xl sm:text-2xl font-semibold text-center flex-1">
-            Chat with {selectedUser?.receiverList?.name}
-          </h2>
-        </div>
+    <div className="flex-1 flex flex-col bg-white h-full overflow-y-auto">
+  {selectedUser ? (
+    <>
+      {/* Fixed Header */}
+      <div className="p-4 bg-white shadow-md flex items-center justify-between sticky top-0 z-10">
+        {isMobile && (
+          <button
+            className="text-blue-500 hover:underline"
+            onClick={() => setSelectedUser(null)}
+          >
+            &larr; Back to Users
+          </button>
+        )}
+        <h2 className="text-xl sm:text-2xl font-semibold text-center flex-1">
+          Chat with {selectedUser?.receiverList?.name}
+        </h2>
+      </div>
 
-        {/* Chat History */}
-        <div className="flex-1 overflow-y-auto p-4 bg-gray-50 rounded-lg">
-          {chatHistory.map((val, index) => (
+      {/* Chat History */}
+      <div className="flex-1 overflow-y-auto p-4 bg-gray-50 rounded-lg">
+        {chatHistory.map(
+          (val, index) =>
             val?.room_id === selectedUser?._id && (
               <div
                 key={index}
@@ -177,35 +180,48 @@ const Message = () => {
                 </div>
               </div>
             )
-          ))}
+        )}
 
-          {typingUser && typingUser === selectedUser?.receiverList?._id && (
-            <div className="flex justify-start">
-              <div className="p-2 rounded-lg max-w-xs bg-gray-200 italic text-sm">
-                {selectedUser?.receiverList?.name} is typing...
-              </div>
+        {typingUser && typingUser === selectedUser?.receiverList?._id && (
+          <div className="flex justify-start">
+            <div className="p-2 rounded-lg max-w-xs bg-gray-200 italic text-sm">
+              {selectedUser?.receiverList?.name} is typing...
             </div>
-          )}
-          <div ref={chatEndRef} />
-        </div>
-
-        {/* Fixed Chat Input */}
-        <div className="p-2 bg-white border-t flex items-center gap-4 sticky bottom-0 z-10">
-          <textarea
-            value={message}
-            onChange={handleMessageChange}
-            className="w-full p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 resize-none"
-            placeholder="Type your message..."
-          />
-          <button
-            onClick={handleMessage}
-            className="w-24 sm:w-28 bg-blue-500 text-white py-2 rounded-lg hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500"
-          >
-            Send
-          </button>
-        </div>
+          </div>
+        )}
+        <div ref={chatEndRef} />
       </div>
-    )}
+
+      {/* Fixed Chat Input */}
+      {/* <div className="p-2 bg-white border-t flex items-center gap-4 sticky bottom-0 z-10">
+        <textarea
+          value={message}
+          onChange={handleMessageChange}
+          className="w-full p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 resize-none"
+          placeholder="Type your message..."
+        />
+        <button
+          onClick={handleMessage}
+          className="w-24 sm:w-28 bg-blue-500 text-white py-2 rounded-lg hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500"
+        >
+          Send
+        </button>
+      </div> */}
+
+      <ChatInput 
+      message={message}
+      handleMessageChange={handleMessageChange}
+      handleMessage={handleMessage}
+      
+      />
+    </>
+  ) : (
+    <div className="flex-1 flex items-center justify-center text-gray-500 text-lg">
+      Start a chat with your friends
+    </div>
+  )}
+</div>
+
   </div>
 
 
