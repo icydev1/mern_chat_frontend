@@ -18,7 +18,7 @@ const EditProfile = () => {
       <div className="bg-white rounded-2xl shadow-md p-6 w-full">
         <div className="flex flex-col items-center">
           <img
-            src="https://via.placeholder.com/150"
+            src="https://img.freepik.com/free-vector/smiling-boy-hoodie_1308-178004.jpg?semt=ais_hybrid"
             alt="User Avatar"
             className="w-32 h-32 rounded-full border-4 border-blue-500 shadow-lg"
           />

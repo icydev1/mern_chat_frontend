@@ -121,17 +121,26 @@ const Message = () => {
         <ul className="flex-1 overflow-y-auto">
           {roomListing.map((user) => (
             <li
-              key={user?._id}
-              className={`p-2 mb-2 cursor-pointer hover:bg-gray-200 rounded-lg ${
-                selectedUser?._id === user?._id ? "bg-blue-100" : ""
-              }`}
-              onClick={() => {
-                setSelectedUser(user);
-                fetchChatHistory(user._id);
-              }}
-            >
-              {user?.receiverList?.name}
-            </li>
+            key={user?._id}
+            className={`p-2 mb-2 flex items-center gap-2 cursor-pointer hover:bg-gray-200 rounded-lg ${
+              selectedUser?._id === user?._id ? "bg-blue-100" : ""
+            }`}
+            onClick={() => {
+              setSelectedUser(user);
+              fetchChatHistory(user._id);
+            }}
+          >
+            {/* Profile Image */}
+            <img
+              src={user?.profileImage || "https://img.freepik.com/free-vector/smiling-boy-hoodie_1308-178004.jpg?semt=ais_hybrid"}
+              alt="Profile"
+              className="w-10 h-10 rounded-full object-cover"
+            />
+            
+            {/* User Name */}
+            <span className="text-gray-800 font-medium">{user?.receiverList?.name}</span>
+          </li>
+          
           ))}
         </ul>
       </div>
